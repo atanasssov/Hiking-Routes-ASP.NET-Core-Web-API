@@ -6,6 +6,11 @@ namespace HikingRoutes.API.Models.Domain
 {
     public class Region
     {
+        public Region()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
         [Key]
         public Guid Id { get; set; }
 

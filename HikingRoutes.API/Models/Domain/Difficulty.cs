@@ -6,6 +6,11 @@ namespace HikingRoutes.API.Models.Domain
 {
     public class Difficulty
     {
+        public Difficulty()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
         [Key]
         public Guid Id { get; set; }
 
