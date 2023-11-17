@@ -2,6 +2,7 @@
 
 using HikingRoutes.API.Data;
 using HikingRoutes.API.Models.Domain;
+using HikingRoutes.API.Models.DTOs;
 
 namespace HikingRoutes.API.Controllers
 {
@@ -21,8 +22,23 @@ namespace HikingRoutes.API.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var regions = _dbContext.Regions.ToList();
-            return Ok(regions);
+            List<Region> regionsDomain = _dbContext.Regions.ToList();
+
+            List<RegionDto> regionsDto = new List<RegionDto>();
+
+            foreach(var regionDomain in regionsDomain)
+            {
+
+                regionsDto.Add(new RegionDto
+                {
+                    Id = regionDomain.Id,
+                    Code = regionDomain.Code,
+                    Name = regionDomain.Name,
+                    RegionImageUrl = regionDomain.RegionImageUrl
+                });
+            }
+
+            return Ok(regionsDto);
         }
 
 
@@ -32,14 +48,22 @@ namespace HikingRoutes.API.Controllers
         [Route("{id:Guid}")]
         public IActionResult GetById([FromRoute] Guid id)
         {
-            var region = _dbContext.Regions.FirstOrDefault(x => x.Id ==id);
+            Region? regionDomain = _dbContext.Regions.FirstOrDefault(x => x.Id ==id);
 
-            if(region == null)
+            if(regionDomain == null)
             {
                 return NotFound();
             }
 
-            return Ok(region);
+            RegionDto regionDto = new RegionDto()
+            {
+                Id = regionDomain.Id,
+                Code = regionDomain.Code,
+                Name = regionDomain.Name,
+                RegionImageUrl = regionDomain.RegionImageUrl
+            };
+
+            return Ok(regionDto);
         }
 
 
