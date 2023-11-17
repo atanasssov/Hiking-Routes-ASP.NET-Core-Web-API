@@ -43,7 +43,7 @@ namespace HikingRoutes.API.Controllers
 
 
         //Get single region by Id
-        // GET: https://localhost:portnumber/api/regions/{Id}
+        // GET: https://localhost:portnumber/api/regions/{id}
         [HttpGet]
         [Route("{id:Guid}")]
         public IActionResult GetById([FromRoute] Guid id)
@@ -64,6 +64,32 @@ namespace HikingRoutes.API.Controllers
             };
 
             return Ok(regionDto);
+        }
+
+        // Post to create a new region
+        // Post: https://localhost:portnumber/api/regions
+        [HttpPost]
+        public IActionResult Create([FromBody] AddRegionRequestDto addRegionRequestDto)
+        {
+            Region regionDomain = new Region()
+            {
+                Code = addRegionRequestDto.Code,
+                Name = addRegionRequestDto.Name,
+                RegionImageUrl = addRegionRequestDto.RegionImageUrl
+            };
+
+            _dbContext.Regions.Add(regionDomain);
+            _dbContext.SaveChanges();
+
+            RegionDto regionDto = new RegionDto()
+            {
+                Id = regionDomain.Id,
+                Code = regionDomain.Code,
+                Name = regionDomain.Name,
+                RegionImageUrl = regionDomain.RegionImageUrl
+            };
+
+            return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
         }
 
 
