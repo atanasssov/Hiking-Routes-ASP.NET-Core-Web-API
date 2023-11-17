@@ -34,7 +34,7 @@ namespace HikingRoutes.API.Controllers
         {
             var region = _dbContext.Regions.FirstOrDefault(x => x.Id ==id);
 
-            if(region != null)
+            if(region == null)
             {
                 return NotFound();
             }
