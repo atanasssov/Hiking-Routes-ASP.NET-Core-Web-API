@@ -20,6 +20,9 @@ namespace HikingRoutes.API.Mappings
             // mappings for route
             CreateMap<AddRouteRequestDto, Route>().ReverseMap();
             CreateMap<Route, RouteDto>().ReverseMap();
+
+            //mappings for difficulty
+            CreateMap<Difficulty, DifficultyDto>().ReverseMap();
         }
     }
 }

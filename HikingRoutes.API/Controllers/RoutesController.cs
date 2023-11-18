@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using HikingRoutes.API.Models.DTOs;
+using HikingRoutes.API.Repositories;
 
 using AutoMapper;
 
 // Use Aliases
 using Route = HikingRoutes.API.Models.Domain.Route;
-using HikingRoutes.API.Repositories;
 //using Route2 = Microsoft.AspNetCore.Routing.Route;
 
 
@@ -25,6 +25,20 @@ namespace HikingRoutes.API.Controllers
             _mapper = mapper;
             _routesRepository = routesRepository;
         }
+
+        // Get all routes
+        // GET: https://localhost:portnumber/api/routes
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+
+            List<Route> routeDomain = await _routesRepository.GetAllAsync();
+
+            List<RouteDto> routeDto = _mapper.Map<List<RouteDto>>(routeDomain);
+
+            return Ok(routeDto);
+        }
+
 
         // Post to create a new route
         // Post: https://localhost:portnumber/api/routes

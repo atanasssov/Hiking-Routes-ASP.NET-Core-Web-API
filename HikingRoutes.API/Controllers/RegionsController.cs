@@ -23,7 +23,7 @@ namespace HikingRoutes.API.Controllers
             _mapper = mapper;
         }
 
-        //Get all regions
+        // Get all regions
         // GET: https://localhost:portnumber/api/regions
         [HttpGet]
         public async Task<IActionResult> GetAll()
