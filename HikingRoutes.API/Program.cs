@@ -1,5 +1,7 @@
-using HikingRoutes.API.Data;
 using Microsoft.EntityFrameworkCore;
+
+using HikingRoutes.API.Data;
+using HikingRoutes.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<HikingRoutesDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("HikingRoutesConnectionString")));
+
+builder.Services.AddScoped<IRegionsRepository, RegionsRepository>();
 
 
 var app = builder.Build();
