@@ -17,6 +17,7 @@ builder.Services.AddDbContext<HikingRoutesDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("HikingRoutesConnectionString")));
 
 builder.Services.AddScoped<IRegionsRepository, RegionsRepository>();
+builder.Services.AddScoped<IRoutesRepository, RoutesRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 using HikingRoutes.API.Models.Domain;
 
+
 namespace HikingRoutes.API.Data
 {
     public class HikingRoutesDbContext : DbContext
