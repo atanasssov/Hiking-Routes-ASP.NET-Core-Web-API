@@ -92,7 +92,35 @@ namespace HikingRoutes.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
         }
 
+        // Update region
+        // PUT: https://localhost:portnumber/api/regions/{id}
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public IActionResult Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
+        {
+            Region? regionDomain =  _dbContext.Regions.FirstOrDefault(x => x.Id == id);
+            if(regionDomain == null)
+            {
+                return NotFound();
+            }
 
+
+            regionDomain.Code = updateRegionRequestDto.Code;
+            regionDomain.Name = updateRegionRequestDto.Name;
+            regionDomain.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
+
+            _dbContext.SaveChanges();
+
+            RegionDto regionDto = new RegionDto()
+            {
+                Id = regionDomain.Id,
+                Code = regionDomain.Code,
+                Name = regionDomain.Name,
+                RegionImageUrl = regionDomain.RegionImageUrl
+            };
+
+            return Ok(regionDto);
+        }
 
     }
 }
