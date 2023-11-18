@@ -69,6 +69,7 @@ namespace HikingRoutes.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
         }
 
+
         // Update region
         // PUT: https://localhost:portnumber/api/regions/{id}
         [HttpPut]
@@ -89,6 +90,7 @@ namespace HikingRoutes.API.Controllers
 
             return Ok(regionDto);
         }
+
 
         // Delete region
         // DELETE: https://localhost:portnumber/api/regions/{id}

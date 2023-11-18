@@ -12,6 +12,13 @@ namespace HikingRoutes.API.Repositories
         Task<List<Route>> GetAllAsync();
 
         /// <summary>
+        /// Returns a route object based on the given route id
+        /// </summary>
+        /// <param name="id">Route id to search</param>
+        /// <returns>Matching route or null</returns>
+        Task<Route?> GetByIdAsync(Guid id);
+
+        /// <summary>
         /// Creates a route object and adds it to the data store
         /// </summary>
         /// <param name="route">Route object to add</param>

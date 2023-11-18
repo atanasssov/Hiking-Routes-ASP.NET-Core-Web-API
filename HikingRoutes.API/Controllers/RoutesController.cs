@@ -40,6 +40,26 @@ namespace HikingRoutes.API.Controllers
         }
 
 
+        //Get single route by Id
+        // GET: https://localhost:portnumber/api/routes/{id}
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            Route? routeDomain = await _routesRepository.GetByIdAsync(id);
+
+            if(routeDomain == null)
+            {
+                return NotFound();
+            }
+
+            RouteDto routeDto = _mapper.Map<RouteDto>(routeDomain);
+
+            return Ok(routeDto);
+
+        }
+
+
         // Post to create a new route
         // Post: https://localhost:portnumber/api/routes
         [HttpPost]

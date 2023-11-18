@@ -24,6 +24,15 @@ namespace HikingRoutes.API.Repositories
                 .ToListAsync();
         }
 
+        public async Task<Route?> GetByIdAsync(Guid id)
+        {
+            return await _dbContext
+                .Routes
+                .Include("Difficulty")
+                .Include("Region")
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<Route> CreateAsync(Route route)
         {
             await _dbContext.Routes.AddAsync(route);
@@ -31,6 +40,6 @@ namespace HikingRoutes.API.Repositories
             return route;
         }
 
-       
+        
     }
 }
