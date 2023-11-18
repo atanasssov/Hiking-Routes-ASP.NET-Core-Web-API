@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 using HikingRoutes.API.Data;
 using HikingRoutes.API.Models.Domain;
@@ -20,9 +21,9 @@ namespace HikingRoutes.API.Controllers
         //Get all regions
         // GET: https://localhost:portnumber/api/regions
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            List<Region> regionsDomain = _dbContext.Regions.ToList();
+            List<Region> regionsDomain = await _dbContext.Regions.ToListAsync();
 
             List<RegionDto> regionsDto = new List<RegionDto>();
 
@@ -46,9 +47,9 @@ namespace HikingRoutes.API.Controllers
         // GET: https://localhost:portnumber/api/regions/{id}
         [HttpGet]
         [Route("{id:Guid}")]
-        public IActionResult GetById([FromRoute] Guid id)
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
-            Region? regionDomain = _dbContext.Regions.FirstOrDefault(x => x.Id ==id);
+            Region? regionDomain = await _dbContext.Regions.FirstOrDefaultAsync(x => x.Id ==id);
 
             if(regionDomain == null)
             {
@@ -69,7 +70,7 @@ namespace HikingRoutes.API.Controllers
         // Post to create a new region
         // Post: https://localhost:portnumber/api/regions
         [HttpPost]
-        public IActionResult Create([FromBody] AddRegionRequestDto addRegionRequestDto)
+        public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             Region regionDomain = new Region()
             {
@@ -78,8 +79,8 @@ namespace HikingRoutes.API.Controllers
                 RegionImageUrl = addRegionRequestDto.RegionImageUrl
             };
 
-            _dbContext.Regions.Add(regionDomain);
-            _dbContext.SaveChanges();
+            await _dbContext.Regions.AddAsync(regionDomain);
+            await _dbContext.SaveChangesAsync();
 
             RegionDto regionDto = new RegionDto()
             {
@@ -96,9 +97,9 @@ namespace HikingRoutes.API.Controllers
         // PUT: https://localhost:portnumber/api/regions/{id}
         [HttpPut]
         [Route("{id:Guid}")]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
-            Region? regionDomain =  _dbContext.Regions.FirstOrDefault(x => x.Id == id);
+            Region? regionDomain =  await _dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
 
             if(regionDomain == null)
             {
@@ -110,7 +111,7 @@ namespace HikingRoutes.API.Controllers
             regionDomain.Name = updateRegionRequestDto.Name;
             regionDomain.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
 
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
             RegionDto regionDto = new RegionDto()
             {
@@ -127,9 +128,9 @@ namespace HikingRoutes.API.Controllers
         // DELETE: https://localhost:portnumber/api/regions/{id}
         [HttpDelete]
         [Route("{id:Guid}")]
-        public IActionResult Delete([FromRoute] Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            Region? regionDomain = _dbContext.Regions.FirstOrDefault(x => x.Id == id);
+            Region? regionDomain = await _dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
 
             if (regionDomain == null)
             {
@@ -137,7 +138,7 @@ namespace HikingRoutes.API.Controllers
             }
 
             _dbContext.Regions.Remove(regionDomain);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
             return NoContent();
         }
