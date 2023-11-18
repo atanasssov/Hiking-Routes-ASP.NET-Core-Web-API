@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-using HikingRoutes.API.Data;
 using HikingRoutes.API.Models.Domain;
 using HikingRoutes.API.Models.DTOs;
 using HikingRoutes.API.Repositories;
+
+using AutoMapper;
 
 namespace HikingRoutes.API.Controllers
 {
@@ -14,10 +14,13 @@ namespace HikingRoutes.API.Controllers
     {
  
         private readonly IRegionsRepository _regionRepository;
+        private readonly IMapper _mapper;
 
-        public RegionsController(IRegionsRepository regionRepository)
+        public RegionsController(IRegionsRepository regionRepository,
+                                 IMapper mapper)
         {
             _regionRepository = regionRepository;
+            _mapper = mapper;
         }
 
         //Get all regions
@@ -25,21 +28,10 @@ namespace HikingRoutes.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            
             List<Region> regionsDomain = await _regionRepository.GetAllAsync();
 
-            List<RegionDto> regionsDto = new List<RegionDto>();
-
-            foreach(var regionDomain in regionsDomain)
-            {
-
-                regionsDto.Add(new RegionDto
-                {
-                    Id = regionDomain.Id,
-                    Code = regionDomain.Code,
-                    Name = regionDomain.Name,
-                    RegionImageUrl = regionDomain.RegionImageUrl
-                });
-            }
+            List<RegionDto> regionsDto = _mapper.Map<List<RegionDto>>(regionsDomain);
 
             return Ok(regionsDto);
         }
@@ -58,14 +50,8 @@ namespace HikingRoutes.API.Controllers
                 return NotFound();
             }
 
-            RegionDto regionDto = new RegionDto()
-            {
-                Id = regionDomain.Id,
-                Code = regionDomain.Code,
-                Name = regionDomain.Name,
-                RegionImageUrl = regionDomain.RegionImageUrl
-            };
-
+            RegionDto regionDto = _mapper.Map<RegionDto>(regionDomain);
+           
             return Ok(regionDto);
         }
 
@@ -74,22 +60,11 @@ namespace HikingRoutes.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
-            Region regionDomain = new Region()
-            {
-                Code = addRegionRequestDto.Code,
-                Name = addRegionRequestDto.Name,
-                RegionImageUrl = addRegionRequestDto.RegionImageUrl
-            };
+            Region regionDomain = _mapper.Map<Region>(addRegionRequestDto);
 
             regionDomain = await _regionRepository.CreateAsync(regionDomain);
 
-            RegionDto regionDto = new RegionDto()
-            {
-                Id = regionDomain.Id,
-                Code = regionDomain.Code,
-                Name = regionDomain.Name,
-                RegionImageUrl = regionDomain.RegionImageUrl
-            };
+            RegionDto regionDto = _mapper.Map<RegionDto>(regionDomain);
 
             return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
         }
@@ -101,12 +76,7 @@ namespace HikingRoutes.API.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
 
-            Region? regionDomain = new Region
-            {
-                Code = updateRegionRequestDto.Code,
-                Name = updateRegionRequestDto.Name,
-                RegionImageUrl = updateRegionRequestDto.RegionImageUrl
-            };
+            Region? regionDomain = _mapper.Map<Region>(updateRegionRequestDto);
 
             regionDomain = await _regionRepository.UpdateAsync(id, regionDomain);
 
@@ -115,14 +85,7 @@ namespace HikingRoutes.API.Controllers
                 return NotFound();
             }
 
-
-            RegionDto regionDto = new RegionDto()
-            {
-                Id = regionDomain.Id,
-                Code = regionDomain.Code,
-                Name = regionDomain.Name,
-                RegionImageUrl = regionDomain.RegionImageUrl
-            };
+            RegionDto regionDto = _mapper.Map<RegionDto>(regionDomain);
 
             return Ok(regionDto);
         }
@@ -141,17 +104,8 @@ namespace HikingRoutes.API.Controllers
             }
 
             // If we want to return the deleted object
-
-            //RegionDto regionDto= new RegionDto
-            //{
-            //    Id = regionDomain.Id,
-            //    Code = regionDomain.Code,
-            //    Name = regionDomain.Name,
-            //    RegionImageUrl = regionDomain.RegionImageUrl
-            //};
-
+            //RegionDto regionDto = _mapper.Map<RegionDto>(regionDomain);
             //return Ok(regionDto);
-
 
             return NoContent();
         }
