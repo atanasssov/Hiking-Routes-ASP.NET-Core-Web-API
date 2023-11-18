@@ -99,6 +99,7 @@ namespace HikingRoutes.API.Controllers
         public IActionResult Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             Region? regionDomain =  _dbContext.Regions.FirstOrDefault(x => x.Id == id);
+
             if(regionDomain == null)
             {
                 return NotFound();
@@ -122,5 +123,23 @@ namespace HikingRoutes.API.Controllers
             return Ok(regionDto);
         }
 
+        // Delete region
+        // DELETE: https://localhost:portnumber/api/regions/{id}
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public IActionResult Delete([FromRoute] Guid id)
+        {
+            Region? regionDomain = _dbContext.Regions.FirstOrDefault(x => x.Id == id);
+
+            if (regionDomain == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Regions.Remove(regionDomain);
+            _dbContext.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
