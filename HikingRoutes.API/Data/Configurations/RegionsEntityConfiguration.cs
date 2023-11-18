@@ -1,6 +1,7 @@
-﻿using HikingRoutes.API.Models.Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+using HikingRoutes.API.Models.Domain;
 
 namespace HikingRoutes.API.Data.Configurations
 {
