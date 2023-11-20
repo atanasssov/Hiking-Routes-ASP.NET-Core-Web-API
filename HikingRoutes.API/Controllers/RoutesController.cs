@@ -94,5 +94,21 @@ namespace HikingRoutes.API.Controllers
             return Ok(routeDto);
         }
 
+        // Delete route by id
+        // DELETE: https://localhost:portnumber/api/routes/{id}
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            Route? routeDomain = await _routesRepository.DeleteAsync(id);
+
+            if(routeDomain == null)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
     }
 }

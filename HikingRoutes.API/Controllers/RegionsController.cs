@@ -92,7 +92,7 @@ namespace HikingRoutes.API.Controllers
         }
 
 
-        // Delete region
+        // Delete region by id
         // DELETE: https://localhost:portnumber/api/regions/{id}
         [HttpDelete]
         [Route("{id:Guid}")]

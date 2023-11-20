@@ -61,5 +61,20 @@ namespace HikingRoutes.API.Repositories
             return existingRoute;
 
         }
+
+        public async  Task<Route?> DeleteAsync(Guid id)
+        {
+            Route? existingRoute = await _dbContext.Routes.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(existingRoute == null)
+            {
+                return null;
+            }
+
+            _dbContext.Routes.Remove(existingRoute);
+            await _dbContext.SaveChangesAsync();
+
+            return existingRoute;
+        }
     }
 }

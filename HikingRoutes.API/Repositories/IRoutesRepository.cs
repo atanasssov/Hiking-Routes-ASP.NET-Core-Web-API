@@ -33,5 +33,13 @@ namespace HikingRoutes.API.Repositories
         /// <param name="route">Route object with the the properties</param>
         /// <returns>The updated route object or null</returns>
         Task<Route?> UpdateAsync(Guid id, Route route);
+
+
+        /// <summary>
+        /// Deletes a route based on the given route id
+        /// </summary>
+        /// <param name="id">Route id to find a route</param>
+        /// <returns>Deleted route object or null</returns>
+        Task<Route?> DeleteAsync(Guid id);
     }
 }

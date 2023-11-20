@@ -38,7 +38,7 @@ namespace HikingRoutes.API.Repositories
         /// <summary>
         /// Deletes a region based on the given region id
         /// </summary>
-        /// <param name="id">Region id to find region</param>
+        /// <param name="id">Region id to find a region</param>
         /// <returns>Deleted region object or null</returns>
         Task<Region?> DeleteAsync(Guid id);
     }
