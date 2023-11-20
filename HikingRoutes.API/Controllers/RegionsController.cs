@@ -3,6 +3,7 @@
 using HikingRoutes.API.Models.Domain;
 using HikingRoutes.API.Models.DTOs;
 using HikingRoutes.API.Repositories;
+using HikingRoutes.API.CumstomActionFilters;
 
 using AutoMapper;
 
@@ -58,6 +59,7 @@ namespace HikingRoutes.API.Controllers
         // Post to create a new region
         // Post: https://localhost:portnumber/api/regions
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             Region regionDomain = _mapper.Map<Region>(addRegionRequestDto);
@@ -74,6 +76,7 @@ namespace HikingRoutes.API.Controllers
         // PUT: https://localhost:portnumber/api/regions/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
 

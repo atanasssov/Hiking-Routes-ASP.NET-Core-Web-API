@@ -2,6 +2,7 @@
 
 using HikingRoutes.API.Models.DTOs;
 using HikingRoutes.API.Repositories;
+using HikingRoutes.API.CumstomActionFilters;
 
 using AutoMapper;
 
@@ -63,7 +64,7 @@ namespace HikingRoutes.API.Controllers
         // Post to create a new route
         // Post: https://localhost:portnumber/api/routes
         [HttpPost]
-
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddRouteRequestDto addRouteRequestDto)
         {
             Route routeDomain = _mapper.Map<Route>(addRouteRequestDto);
@@ -78,6 +79,7 @@ namespace HikingRoutes.API.Controllers
         // PUT: https://localhost:portnumber/api/routes/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRouteRequestDto updateRouteRequestDto)
         {
             Route? routeDomain = _mapper.Map<Route>(updateRouteRequestDto);
