@@ -42,6 +42,54 @@ namespace HikingRoutes.API.Data.Configurations
             };
             regions.Add(region);
 
+            region = new Region
+            {
+                Code = "PLE",
+                Name = "Pleven",
+                RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Pleven_in_Bulgaria.svg/1024px-Pleven_in_Bulgaria.svg.png"
+            };
+            regions.Add(region);
+
+            region = new Region
+            {
+                Code = "SOF",
+                Name = "Sofia",
+                RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Sofia_%28province%29_in_Bulgaria.svg/1024px-Sofia_%28province%29_in_Bulgaria.svg.png"
+            };
+            regions.Add(region);
+
+            region = new Region
+            {
+                Code = "SLI",
+                Name = "Sliven",
+                RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Sliven_in_Bulgaria.svg/1024px-Sliven_in_Bulgaria.svg.png"
+            };
+            regions.Add(region);
+
+            region = new Region
+            {
+                Code = "SIL",
+                Name = "Silistra",
+                RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Silistra_in_Bulgaria.svg/1024px-Silistra_in_Bulgaria.svg.png"
+            };
+            regions.Add(region);
+
+            region = new Region
+            {
+                Code = "YAM",
+                Name = "Yambol",
+                RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Yambol_in_Bulgaria.svg/1024px-Yambol_in_Bulgaria.svg.png"
+            };
+            regions.Add(region);
+
+            region = new Region
+            {
+                Code = "VID",
+                Name = "Vidin",
+                RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Yambol_in_Bulgaria.svg/1024px-Yambol_in_Bulgaria.svg.png"
+            };
+            regions.Add(region);
+
             return regions.ToArray();
         } 
     }
