@@ -28,12 +28,13 @@ namespace HikingRoutes.API.Controllers
         }
 
         // Get all routes
-        // GET: https://localhost:portnumber/api/routes?filterOn=Name&filterQuery=Mountain
+        // GET: https://localhost:portnumber/api/routes?filterOn=Name&filterQuery=Mountain&sortBy=Name&isAscending=true
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery)
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, 
+                                                [FromQuery] string? sortBy, [FromQuery] bool? isAscending)
         {
 
-            List<Route> routeDomain = await _routesRepository.GetAllAsync(filterOn, filterQuery);
+            List<Route> routeDomain = await _routesRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true);
 
             List<RouteDto> routeDto = _mapper.Map<List<RouteDto>>(routeDomain);
 

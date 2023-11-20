@@ -2,7 +2,6 @@
 
 using HikingRoutes.API.Data;
 using HikingRoutes.API.Models.Domain;
-using System.Data.SqlTypes;
 
 namespace HikingRoutes.API.Repositories
 {

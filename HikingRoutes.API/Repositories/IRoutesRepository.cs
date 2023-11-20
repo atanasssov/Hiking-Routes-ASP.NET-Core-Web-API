@@ -1,4 +1,5 @@
 ﻿// Use Aliases
+using Microsoft.AspNetCore.Mvc;
 using Route = HikingRoutes.API.Models.Domain.Route;
 
 namespace HikingRoutes.API.Repositories
@@ -11,8 +12,11 @@ namespace HikingRoutes.API.Repositories
         /// </summary>
         /// <param name="filterOn">Name of property to search on</param>
         /// <param name="filterQuery">Search word to filter on</param>
+        /// <param name="sortBy">Name of property to sort by</param>
+        /// <param name="isAscending">Way of sorting (ascending if true, descending if false)</param>
         /// <returns>List of routes from the table</returns>
-        Task<List<Route>> GetAllAsync(string? filterOn = null, string? filterQuery = null);
+        Task<List<Route>> GetAllAsync(string? filterOn = null, string? filterQuery = null,
+                                       string? sortBy = null, bool isAscending = true);
 
         /// <summary>
         /// Returns a route object based on the given route id

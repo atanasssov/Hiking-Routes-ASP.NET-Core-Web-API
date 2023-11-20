@@ -16,7 +16,8 @@ namespace HikingRoutes.API.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Route>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
+        public async Task<List<Route>> GetAllAsync(string? filterOn = null, string? filterQuery = null,
+                                                   string? sortBy = null, bool isAscending = true)
         {
             IQueryable<Route> routes = _dbContext.Routes
                 .Include("Difficulty")                      //also . Include(x => x.Difficulty)
@@ -38,6 +39,22 @@ namespace HikingRoutes.API.Repositories
                     routes = routes.Where(x => x.Name.Contains(filterQuery));
 
                 }
+            }
+
+            // Sorting 
+            if (string.IsNullOrWhiteSpace(sortBy) == false)
+            {
+                if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    routes = isAscending ? routes.OrderBy(x => x.Name) 
+                                         : routes.OrderByDescending(x => x.Name);
+                }
+                else if (sortBy.Equals("Length", StringComparison.OrdinalIgnoreCase))
+                {
+                    routes = isAscending ? routes.OrderBy(x => x.LengthInKm)
+                                         : routes.OrderByDescending(x => x.LengthInKm);
+                }
+
             }
 
             return await routes.ToListAsync();
