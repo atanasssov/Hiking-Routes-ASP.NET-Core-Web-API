@@ -40,6 +40,26 @@ namespace HikingRoutes.API.Repositories
             return route;
         }
 
-        
+        public async Task<Route?> UpdateAsync(Guid id, Route route)
+        {
+            Route? existingRoute = await _dbContext.Routes.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(existingRoute == null)
+            {
+                return null;
+            }
+
+            existingRoute.Name = route.Name;
+            existingRoute.Description = route.Description;
+            existingRoute.LengthInKm = route.LengthInKm;
+            existingRoute.WalkImageUrl = route.WalkImageUrl;
+            existingRoute.WalkImageUrl = route.WalkImageUrl;
+            existingRoute.DifficultyId = route.DifficultyId;
+            existingRoute.RegionId = route.RegionId;
+
+            await _dbContext.SaveChangesAsync();
+            return existingRoute;
+
+        }
     }
 }

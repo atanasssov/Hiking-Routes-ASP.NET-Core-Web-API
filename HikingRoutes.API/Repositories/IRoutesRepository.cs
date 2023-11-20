@@ -24,5 +24,14 @@ namespace HikingRoutes.API.Repositories
         /// <param name="route">Route object to add</param>
         /// <returns>Route object after adding it to the table</returns>
         Task<Route> CreateAsync(Route route);
+
+
+        /// <summary>
+        /// Updates a route object based on the given route id
+        /// </summary>
+        /// <param name="id">Route id to seach in the database if route exists</param>
+        /// <param name="route">Route object with the the properties</param>
+        /// <returns>The updated route object or null</returns>
+        Task<Route?> UpdateAsync(Guid id, Route route);
     }
 }

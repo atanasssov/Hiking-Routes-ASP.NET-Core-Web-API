@@ -48,7 +48,7 @@ namespace HikingRoutes.API.Controllers
         {
             Route? routeDomain = await _routesRepository.GetByIdAsync(id);
 
-            if(routeDomain == null)
+            if (routeDomain == null)
             {
                 return NotFound();
             }
@@ -72,6 +72,27 @@ namespace HikingRoutes.API.Controllers
 
             return Ok(_mapper.Map<RouteDto>(routeDomain));
         }
-      
+
+
+        // Update route by id
+        // PUT: https://localhost:portnumber/api/routes/{id}
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRouteRequestDto updateRouteRequestDto)
+        {
+            Route? routeDomain = _mapper.Map<Route>(updateRouteRequestDto);
+
+            routeDomain = await _routesRepository.UpdateAsync(id, routeDomain);
+
+            if(routeDomain == null)
+            {
+                return NotFound();
+            }
+
+            RouteDto routeDto = _mapper.Map<RouteDto>(routeDomain);
+
+            return Ok(routeDto);
+        }
+
     }
 }

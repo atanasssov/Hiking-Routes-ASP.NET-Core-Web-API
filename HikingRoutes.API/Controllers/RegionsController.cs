@@ -70,7 +70,7 @@ namespace HikingRoutes.API.Controllers
         }
 
 
-        // Update region
+        // Update region by id
         // PUT: https://localhost:portnumber/api/regions/{id}
         [HttpPut]
         [Route("{id:Guid}")]
