@@ -5,11 +5,14 @@ namespace HikingRoutes.API.Repositories
 {
     public interface IRoutesRepository
     {
+
         /// <summary>
         /// Return all routes in the data store
         /// </summary>
+        /// <param name="filterOn">Name of property to search on</param>
+        /// <param name="filterQuery">Search word to filter on</param>
         /// <returns>List of routes from the table</returns>
-        Task<List<Route>> GetAllAsync();
+        Task<List<Route>> GetAllAsync(string? filterOn = null, string? filterQuery = null);
 
         /// <summary>
         /// Returns a route object based on the given route id

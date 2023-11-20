@@ -16,12 +16,32 @@ namespace HikingRoutes.API.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Route>> GetAllAsync()
+        public async Task<List<Route>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
         {
-            return await _dbContext.Routes
-                .Include("Difficulty")                   //also . Include(x => x.Difficulty)
+            IQueryable<Route> routes = _dbContext.Routes
+                .Include("Difficulty")                      //also . Include(x => x.Difficulty)
                 .Include("Region")
-                .ToListAsync();
+                .AsQueryable();
+
+            
+            // Filtering
+
+            if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
+            {
+                //validating (name,NAME,nAmE, namE, etc)
+
+                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))       
+                {
+                    // case-insensitive matching
+                    // Contains method used within LINQ queries against Entity Framework for string comparison is indeed case-insensitive
+
+                    routes = routes.Where(x => x.Name.Contains(filterQuery));
+
+                }
+            }
+
+            return await routes.ToListAsync();
+
         }
 
         public async Task<Route?> GetByIdAsync(Guid id)

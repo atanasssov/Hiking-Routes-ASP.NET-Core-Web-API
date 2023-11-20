@@ -28,12 +28,12 @@ namespace HikingRoutes.API.Controllers
         }
 
         // Get all routes
-        // GET: https://localhost:portnumber/api/routes
+        // GET: https://localhost:portnumber/api/routes?filterOn=Name&filterQuery=Mountain
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery)
         {
 
-            List<Route> routeDomain = await _routesRepository.GetAllAsync();
+            List<Route> routeDomain = await _routesRepository.GetAllAsync(filterOn, filterQuery);
 
             List<RouteDto> routeDto = _mapper.Map<List<RouteDto>>(routeDomain);
 
