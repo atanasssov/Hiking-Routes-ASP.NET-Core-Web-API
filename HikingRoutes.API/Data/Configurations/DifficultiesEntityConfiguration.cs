@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using HikingRoutes.API.Models.Domain;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HikingRoutes.API.Data.Configurations
 {
