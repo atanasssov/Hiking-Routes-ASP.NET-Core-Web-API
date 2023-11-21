@@ -1,5 +1,6 @@
-﻿// Use Aliases
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+
+// Use Aliases
 using Route = HikingRoutes.API.Models.Domain.Route;
 
 namespace HikingRoutes.API.Repositories

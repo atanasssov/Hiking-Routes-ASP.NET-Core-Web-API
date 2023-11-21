@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using HikingRoutes.API.Models.Domain;
 using HikingRoutes.API.Models.DTOs;
@@ -11,6 +12,7 @@ namespace HikingRoutes.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RegionsController : ControllerBase
     {
  
