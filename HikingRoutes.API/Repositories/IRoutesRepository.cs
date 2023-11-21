@@ -14,9 +14,12 @@ namespace HikingRoutes.API.Repositories
         /// <param name="filterQuery">Search word to filter on</param>
         /// <param name="sortBy">Name of property to sort by</param>
         /// <param name="isAscending">Way of sorting (ascending if true, descending if false)</param>
+        /// <param name="pageNumber">The page which you want to be displayed</param>
+        /// <param name="pageSize">The number of results on page</param>
         /// <returns>List of routes from the table</returns>
         Task<List<Route>> GetAllAsync(string? filterOn = null, string? filterQuery = null,
-                                       string? sortBy = null, bool isAscending = true);
+                                       string? sortBy = null, bool isAscending = true,
+                                        int pageNumber = 1, int pageSize = 5);
 
         /// <summary>
         /// Returns a route object based on the given route id

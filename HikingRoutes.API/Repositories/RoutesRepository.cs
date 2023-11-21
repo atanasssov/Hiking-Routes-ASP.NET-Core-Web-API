@@ -17,7 +17,8 @@ namespace HikingRoutes.API.Repositories
         }
 
         public async Task<List<Route>> GetAllAsync(string? filterOn = null, string? filterQuery = null,
-                                                   string? sortBy = null, bool isAscending = true)
+                                                   string? sortBy = null, bool isAscending = true,
+                                                   int pageNumber = 1, int pageSize = 5)
         {
             IQueryable<Route> routes = _dbContext.Routes
                 .Include("Difficulty")                      //also . Include(x => x.Difficulty)
@@ -57,7 +58,10 @@ namespace HikingRoutes.API.Repositories
 
             }
 
-            return await routes.ToListAsync();
+            // Pagination
+            var skipResults = (pageNumber - 1) * pageSize;
+
+            return await routes.Skip(skipResults).Take(pageSize).ToListAsync();
 
         }
 
