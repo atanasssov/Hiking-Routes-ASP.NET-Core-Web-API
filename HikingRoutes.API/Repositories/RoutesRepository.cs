@@ -58,6 +58,13 @@ namespace HikingRoutes.API.Repositories
 
             }
 
+            //If sortBy is null - sorting ascending in order not to show WARNING: 
+            // The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+            //else
+            //{
+            //    routes = routes.OrderBy(x => x.Name);
+            //}
+
             // Pagination
             var skipResults = (pageNumber - 1) * pageSize;
 
