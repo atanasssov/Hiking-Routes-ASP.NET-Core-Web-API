@@ -12,7 +12,6 @@ namespace HikingRoutes.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class RegionsController : ControllerBase
     {
  
@@ -29,6 +28,7 @@ namespace HikingRoutes.API.Controllers
         // Get all regions
         // GET: https://localhost:portnumber/api/regions
         [HttpGet]
+        [Authorize(Roles = "Reader, Writer")]
         public async Task<IActionResult> GetAll()
         {
             
@@ -44,6 +44,7 @@ namespace HikingRoutes.API.Controllers
         // GET: https://localhost:portnumber/api/regions/{id}
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             Region? regionDomain = await _regionRepository.GetByIdAsync(id);
@@ -62,6 +63,7 @@ namespace HikingRoutes.API.Controllers
         // Post: https://localhost:portnumber/api/regions
         [HttpPost]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             Region regionDomain = _mapper.Map<Region>(addRegionRequestDto);
@@ -79,6 +81,7 @@ namespace HikingRoutes.API.Controllers
         [HttpPut]
         [Route("{id:Guid}")]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
 
@@ -101,6 +104,7 @@ namespace HikingRoutes.API.Controllers
         // DELETE: https://localhost:portnumber/api/regions/{id}
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             Region? regionDomain = await _regionRepository.DeleteAsync(id);
