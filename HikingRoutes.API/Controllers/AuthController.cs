@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using HikingRoutes.API.Models.DTOs;
+using HikingRoutes.API.Repositories;
 
 namespace HikingRoutes.API.Controllers
 {
@@ -10,10 +11,12 @@ namespace HikingRoutes.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ITokensRepository _tokensRepository;
 
-        public AuthController(UserManager<IdentityUser> userManager)
+        public AuthController(UserManager<IdentityUser> userManager, ITokensRepository tokensRepository)
         {
             _userManager = userManager;
+            _tokensRepository = tokensRepository;
         }
 
         // POST https://localhost:portnumber/api/Auth/Register
@@ -43,6 +46,39 @@ namespace HikingRoutes.API.Controllers
             }
 
             return BadRequest("Something went wrong");
+        }
+
+        // POST https://localhost:portnumber/api/Auth/Login
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
+        {
+            IdentityUser? user = await _userManager.FindByEmailAsync(loginRequestDto.Username);
+
+            if (user != null)
+            {
+                bool checkPasswordResult = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
+
+                if (checkPasswordResult)
+                {
+                    IList<string> roles = await _userManager.GetRolesAsync(user);
+
+                    if (roles != null)
+                    {
+
+                        string jwtToken = _tokensRepository.CreateJWTToken(user, roles.ToList());
+
+                        LoginResponseDto response = new LoginResponseDto
+                        {
+                            JwtToken = jwtToken
+                        };
+
+                        return Ok(response);
+                    }
+                }
+            }
+
+            return BadRequest("Username or password is incorrect");
         }
 
     }

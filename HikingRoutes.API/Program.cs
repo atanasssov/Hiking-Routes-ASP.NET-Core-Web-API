@@ -26,6 +26,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("HikingRoutesAuth
 
 builder.Services.AddScoped<IRegionsRepository, RegionsRepository>();
 builder.Services.AddScoped<IRoutesRepository, RoutesRepository>();
+builder.Services.AddScoped<ITokensRepository, TokensRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
