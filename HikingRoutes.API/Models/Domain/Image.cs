@@ -18,7 +18,9 @@ namespace HikingRoutes.API.Models.Domain
 
         [Required]
         public string FileName { get; set; } = null!;
+
         public string? FileDescription { get; set; } 
+
         [Required]
         public string FileExtension { get; set; } = null!;
 

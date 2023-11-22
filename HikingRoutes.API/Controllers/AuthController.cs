@@ -19,6 +19,7 @@ namespace HikingRoutes.API.Controllers
             _tokensRepository = tokensRepository;
         }
 
+        // Register an user
         // POST https://localhost:portnumber/api/Auth/Register
         [HttpPost]
         [Route("Register")]
@@ -48,6 +49,7 @@ namespace HikingRoutes.API.Controllers
             return BadRequest("Something went wrong");
         }
 
+        // Login user
         // POST https://localhost:portnumber/api/Auth/Login
         [HttpPost]
         [Route("Login")]
