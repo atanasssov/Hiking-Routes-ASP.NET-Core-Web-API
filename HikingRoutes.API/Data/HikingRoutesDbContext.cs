@@ -21,6 +21,8 @@ namespace HikingRoutes.API.Data
 
         public DbSet<HikingRoutes.API.Models.Domain.Route> Routes { get; set; }
 
+        public DbSet<Image> Images { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             Assembly configAssembly = Assembly.GetAssembly(typeof(HikingRoutesDbContext)) ??
